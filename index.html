@@ -5,24 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Plugin</title>
 <style>
-  :root { --bg:#fff; --fg:#24292e; --cbg:#f6f8fa; --bd:#dfe2e5; --link:#0366d6; --bq:#6a737d; --hbd:#eaecef; }
-  [data-theme="dark"] { --bg:#0d1117; --fg:#c9d1d9; --cbg:#161b22; --bd:#30363d; --link:#58a6ff; --bq:#8b949e; --hbd:#21262d; }
-  body { max-width:900px; margin:20px auto; padding:0 20px; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; line-height:1.6; color:var(--fg); background:var(--bg); overflow-x:hidden; }
-  pre, code { background:var(--cbg); }
-  pre { padding:16px; overflow:auto; border-radius:6px; }
-  code { padding:2px 6px; border-radius:3px; font-family:SFMono-Regular,Consolas,monospace; font-size:85%; }
-  pre code { padding:0; background:transparent; }
-  a { color:var(--link); text-decoration:none; }
-  a:hover { text-decoration:underline; }
-  table { border-collapse:collapse; width:100%; }
-  th, td { border:1px solid var(--bd); padding:8px 12px; text-align:left; }
-  th { background:var(--cbg); font-weight:600; }
-  img { max-width:100%; }
-  blockquote { border-left:4px solid var(--bd); margin:0; padding:0 16px; color:var(--bq); }
-  h1, h2, h3 { border-bottom:1px solid var(--hbd); padding-bottom:.3em; }
-  #toggle { position:fixed; top:20px; right:20px; width:44px; height:44px; background:transparent; border:none; color:var(--fg); border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:10000; padding:0; }
-  #toggle svg { width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition: stroke 0.3s ease; }
-  .theme-wave { position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999; pointer-events:none; animation: waveAnim 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+  :root { --bg:#ffffff; --cbg:#f6f8fa; --bd:#dfe2e5; --link:#0366d6; --bq:#6a737d; --hbd:#eaecef; }
+  [data-theme="dark"] { --bg:#0d1117; --cbg:#161b22; --bd:#30363d; --link:#58a6ff; --bq:#8b949e; --hbd:#21262d; }
+  html, body { margin:0; padding:0; min-height:100%; background:var(--bg); transition: background 0.3s ease; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; line-height:1.6; overflow-x:hidden; }
+  #content { position:relative; z-index:2; max-width:900px; margin:20px auto; padding:0 20px; color:#fff; mix-blend-mode:difference; isolation:auto; }
+  #content pre, #content code { background:rgba(255,255,255,0.08); }
+  #content pre { padding:16px; overflow:auto; border-radius:6px; }
+  #content code { padding:2px 6px; border-radius:3px; font-family:SFMono-Regular,Consolas,monospace; font-size:85%; }
+  #content pre code { padding:0; background:transparent; }
+  #content a { color:#fff; text-decoration:none; }
+  #content a:hover { text-decoration:underline; }
+  #content table { border-collapse:collapse; width:100%; }
+  #content th, #content td { border:1px solid var(--bd); padding:8px 12px; text-align:left; }
+  #content th { font-weight:600; }
+  #content img { max-width:100%; }
+  #content blockquote { border-left:4px solid var(--bd); margin:0; padding:0 16px; }
+  #content h1, #content h2, #content h3 { border-bottom:1px solid var(--hbd); padding-bottom:.3em; }
+  #toggle { position:fixed; top:20px; right:20px; width:44px; height:44px; background:transparent; border:none; color:#888; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:10000; padding:0; }
+  #toggle svg { width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .theme-wave { position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:1; pointer-events:none; animation: waveAnim 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
   @keyframes waveAnim { 0% { clip-path: circle(0% at var(--x) var(--y)); } 100% { clip-path: circle(150% at var(--x) var(--y)); } }
 </style>
 </head>
@@ -64,8 +66,7 @@
   (async () => {
     try {
       const targetUrl = 'https://raw.githubusercontent.com/femboo/Plugin/main/README.md';
-      const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(targetUrl)}`;
-      const res = await fetch(proxyUrl);
+      const res = await fetch(targetUrl);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const markdown = await res.text();
       document.getElementById('content').innerHTML = marked.parse(markdown);
