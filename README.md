@@ -6,7 +6,7 @@
 *Official plugin repository for the Leaf Music player*
 
 [![UI Page RU](https://shields.io)](https://github.io) |
-[![UI Page EN](https://github.com/femboo/Plugin/raw/refs/heads/main/dota_hub.leaf)
+[![UI Page EN]([https://github.com/femboo/Plugin/raw/refs/heads/main/dota_hub.leaf](https://github.com/femboo/Plugin/raw/refs/heads/main/dota_hub.leaf))
 
 </div>
 
