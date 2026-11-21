@@ -5,8 +5,8 @@
 **Официальный репозиторий расширений для музыкального плеера Leaf Music**  
 *Official plugin repository for the Leaf Music player*
 
-[![UI Page RU](https://shields.io)](https://github.io) |
-[![UI Page EN]([https://github.com/femboo/Plugin/raw/refs/heads/main/dota_hub.leaf](https://github.com/femboo/Plugin/raw/refs/heads/main/dota_hub.leaf))
+[![UI Page RU](https://github.io](https://github.com/femboo/Plugin/blob/main/README.md#%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9) |
+[![UI Page EN](https://github.com/femboo/Plugin/raw/refs/heads/main/dota_hub.leaf)
 
 </div>
 
