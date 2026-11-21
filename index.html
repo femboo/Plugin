@@ -1,40 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plugin</title>
-  <style>
-    body{max-width:900px;margin:20px auto;padding:0 20px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;line-height:1.6;color:#24292e}
-    pre{background:#f6f8fa;padding:16px;overflow:auto;border-radius:6px}
-    code{background:#f6f8fa;padding:2px 6px;border-radius:3px;font-family:SFMono-Regular,Consolas,monospace;font-size:85%}
-    pre code{padding:0;background:transparent}
-    a{color:#0366d6;text-decoration:none}
-    a:hover{text-decoration:underline}
-    table{border-collapse:collapse;width:100%}
-    th,td{border:1px solid #dfe2e5;padding:8px 12px;text-align:left}
-    th{background:#f6f8fa;font-weight:600}
-    img{max-width:100%}
-    blockquote{border-left:4px solid #dfe2e5;margin:0;padding:0 16px;color:#6a737d}
-    h1,h2,h3{border-bottom:1px solid #eaecef;padding-bottom:.3em}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plugin</title>
+<style>
+  :root { --bg:#fff; --fg:#24292e; --cbg:#f6f8fa; --bd:#dfe2e5; --link:#0366d6; --bq:#6a737d; --hbd:#eaecef; }
+  [data-theme="dark"] { --bg:#0d1117; --fg:#c9d1d9; --cbg:#161b22; --bd:#30363d; --link:#58a6ff; --bq:#8b949e; --hbd:#21262d; }
+  body { max-width:900px; margin:20px auto; padding:0 20px; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; line-height:1.6; color:var(--fg); background:var(--bg); overflow-x:hidden; }
+  pre, code { background:var(--cbg); }
+  pre { padding:16px; overflow:auto; border-radius:6px; }
+  code { padding:2px 6px; border-radius:3px; font-family:SFMono-Regular,Consolas,monospace; font-size:85%; }
+  pre code { padding:0; background:transparent; }
+  a { color:var(--link); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  table { border-collapse:collapse; width:100%; }
+  th, td { border:1px solid var(--bd); padding:8px 12px; text-align:left; }
+  th { background:var(--cbg); font-weight:600; }
+  img { max-width:100%; }
+  blockquote { border-left:4px solid var(--bd); margin:0; padding:0 16px; color:var(--bq); }
+  h1, h2, h3 { border-bottom:1px solid var(--hbd); padding-bottom:.3em; }
+  #toggle { position:fixed; top:20px; right:20px; width:44px; height:44px; background:transparent; border:none; color:var(--fg); border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:10000; padding:0; }
+  #toggle svg { width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition: stroke 0.3s ease; }
+  .theme-wave { position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999; pointer-events:none; animation: waveAnim 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+  @keyframes waveAnim { 0% { clip-path: circle(0% at var(--x) var(--y)); } 100% { clip-path: circle(150% at var(--x) var(--y)); } }
+</style>
 </head>
 <body>
-  <div id="content">Loading README.md...</div>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    (async()=>{
-      const u=`https://raw.githubusercontent.com/femboo/Plugin/main/README.md`;
-      const p=`https://corsproxy.io/?url=${encodeURIComponent(u)}`;
-      try{
-        const r=await fetch(p);
-        if(!r.ok)throw new Error(`HTTP ${r.status}`);
-        const m=await r.text();
-        document.getElementById('content').innerHTML=marked.parse(m);
-      }catch(e){
-        document.getElementById('content').textContent='Error loading README: '+e.message;
-      }
-    })();
-  </script>
+<button id="toggle" aria-label="Toggle theme"></button>
+<div id="content">Loading README.md...</div>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  const brushIcon = `<svg viewBox="0 0 24 24"><path d="M9.06 11.9l8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"/><path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z"/></svg>`;
+  const toggleBtn = document.getElementById('toggle');
+  const htmlRoot = document.documentElement;
+  toggleBtn.innerHTML = brushIcon;
+  function setTheme(theme) {
+    htmlRoot.setAttribute('data-theme', theme);
+    localStorage.theme = theme;
+  }
+  function initTheme() {
+    const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+    const savedTheme = localStorage.theme || (isDark ? 'dark' : 'light');
+    setTheme(savedTheme);
+  }
+  toggleBtn.onclick = (e) => {
+    const currentTheme = htmlRoot.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    const x = e.clientX;
+    const y = e.clientY;
+    const wave = document.createElement('div');
+    wave.className = 'theme-wave';
+    wave.style.background = newTheme === 'dark' ? '#0d1117' : '#ffffff';
+    wave.style.setProperty('--x', `${x}px`);
+    wave.style.setProperty('--y', `${y}px`);
+    document.body.appendChild(wave);
+    setTimeout(() => {
+      setTheme(newTheme);
+      wave.remove();
+    }, 600);
+  };
+  initTheme();
+  (async () => {
+    try {
+      const targetUrl = 'https://raw.githubusercontent.com/femboo/Plugin/main/README.md';
+      const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(targetUrl)}`;
+      const res = await fetch(proxyUrl);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const markdown = await res.text();
+      document.getElementById('content').innerHTML = marked.parse(markdown);
+    } catch (err) {
+      document.getElementById('content').textContent = 'Error loading README: ' + err.message;
+    }
+  })();
+</script>
 </body>
 </html>
