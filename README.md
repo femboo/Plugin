@@ -20,7 +20,7 @@
 
 | № | Название | Описание | Установка |
 | :-: | :--- | :--- | :-: |
-| **1** | **Dota Hub** | Расширение для интеграции с Dota Hub | [Скачать `.leaf`]([https://github.com](https://github.com/femboo/Plugin/raw/refs/heads/main/dota_hub.leaf)) |
+| **1** | **Dota Hub** | Расширение для интеграции с Dota Hub | [Скачать `.leaf`](https://github.com/femboo/Plugin/raw/refs/heads/main/dota_hub.leaf) |
 
 ---
 
@@ -32,5 +32,5 @@ Welcome to the **Leaf Music** plugin repository. Here you will find verified ext
 
 | # | Name | Description | Install |
 | :-: | :--- | :--- | :-: |
-| **1** | **Dota Hub** | Extension for Dota Hub integration | [Download `.leaf`]([https://github.com](https://github.com/femboo/Plugin/raw/refs/heads/main/dota_hub.leaf)) |
+| **1** | **Dota Hub** | Extension for Dota Hub integration | [Download `.leaf`](https://github.com/femboo/Plugin/raw/refs/heads/main/dota_hub.leaf) |
 
