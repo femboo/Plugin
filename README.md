@@ -1,8 +1,8 @@
 # Plugin
 Репозиторий плагинов для музыкального плеера Leaf Music. Здесь собраны проверенные расширения для интеграции с внешними сервисами, работы с метаданными, текстами песен и расширения функциональности приложения.
 
-Активные: 
-https://github.com/femboo/Plugin/blob/main/dota_hub.leaf
+Активные:
+ 1. [Dota Hub](https://github.com/femboo/Plugin/raw/refs/heads/main/dota_hub.leaf)
 
 
 
